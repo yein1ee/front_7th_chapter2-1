@@ -1,3 +1,5 @@
+import App from "./App";
+
 const enableMocking = () =>
   import("./mocks/browser.js").then(({ worker }) =>
     worker.start({
@@ -8,14 +10,9 @@ const enableMocking = () =>
     }),
   );
 
-function main() {
-  const $root = document.querySelector("#root");
-  $root.innerHTML = `안녕하세용~`;
-}
-
 // 애플리케이션 시작
 if (import.meta.env.MODE !== "test") {
-  enableMocking().then(main);
+  enableMocking().then(App);
 } else {
-  main();
+  App();
 }
