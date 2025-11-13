@@ -28,6 +28,7 @@ export async function fetchProducts(paramsOverride?: Partial<GetProductsParams>)
     productStore.setState({
       loading: false,
       products: res.products,
+      pagination: res.pagination,
       params: {
         ...res.filters, // search, category, sort
         limit: res.pagination.limit,

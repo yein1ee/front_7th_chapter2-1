@@ -1,10 +1,11 @@
-import { GetProductsParams, ProductItem } from "@/types";
+import { GetProductsParams, ProductItem, Pagination } from "@/types";
 
 export type ProductState = {
   loading: boolean;
   products: ProductItem[];
   error: string | null;
   params: GetProductsParams;
+  pagination: Pagination | null;
 };
 
 function createProductStore(initialState: ProductState) {
@@ -55,4 +56,5 @@ export const productStore = createProductStore({
     category2: "",
     sort: "price_asc",
   },
+  pagination: null,
 });

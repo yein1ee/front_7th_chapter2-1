@@ -4,12 +4,12 @@ import { SearchForm } from "@/components/SearchForm";
 import { ProductState } from "@/store/products-list/productStore";
 
 function ProductListPage(state: ProductState) {
-  const { loading, products } = state;
+  const { loading, products, params, pagination } = state;
 
   return /* html */ `
-    ${SearchForm}
+    ${SearchForm({ loading, params })}
     <div class="mb-6">
-        ${loading ? `${Loading}` : `${ProductList(products)}`}
+        ${loading ? `${Loading}` : `${ProductList({ products, total: pagination?.total ?? 0 })}`}
     </div>
 `;
 }

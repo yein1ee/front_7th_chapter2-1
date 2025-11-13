@@ -2,6 +2,7 @@ import { AppContents, ProductListPage } from "./pages";
 import createRouter from "./router";
 import { fetchProducts } from "./store/products-list/fetchProducts";
 import { ProductState, productStore } from "./store/products-list/productStore";
+import { setupFilterEventHandlers } from "./components/SearchForm/filterEventHandlers";
 
 export default function App() {
   const $root = document.querySelector("#root");
@@ -10,6 +11,8 @@ export default function App() {
     $root.innerHTML = AppContents({
       children: ProductListPage(state),
     });
+    // DOM 렌더링 후 이벤트 리스너 등록
+    setupFilterEventHandlers();
   };
 
   const pages = {
