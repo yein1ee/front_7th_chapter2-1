@@ -1,14 +1,35 @@
-import { AppContents } from "./pages";
+import { AppContents, ProductListPage } from "./pages";
 import createRouter from "./router";
+import { fetchProducts } from "./store/products-list/fetchProducts";
+import { ProductState, productStore } from "./store/products-list/productStore";
 
 export default function App() {
   const $root = document.querySelector("#root");
 
+  const renderHome = (state: ProductState) => {
+    $root.innerHTML = AppContents({
+      children: ProductListPage(state),
+    });
+  };
+
   const pages = {
-    home: () => ($root.innerHTML = AppContents({ children: `home입니다` })),
+    home: () => {
+      const currentState = productStore.getState();
+      renderHome(currentState);
+    },
     products: () => ($root.innerHTML = AppContents({ children: `products 입니다` })),
   };
   const router = createRouter();
 
   router.addRoute("#/", pages.home).addRoute("#/products", pages.products).start();
+
+  productStore.subscribe((state) => {
+    const hash = window.location.hash || "#/";
+
+    if (hash === "#/" || hash === "" || hash === "#") {
+      renderHome(state);
+    }
+  });
+
+  fetchProducts(productStore.getState().params);
 }
